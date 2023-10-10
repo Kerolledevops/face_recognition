@@ -1,0 +1,23 @@
+logLevel = "INFO"
+defaultEntryPoints = ["http"]
+
+[web]
+  address = ":1003"
+
+[entryPoints]
+  [entryPoints.http]
+  address = ":1001"
+
+[file]
+[backends]
+  [backends.fastapi]
+    [backends.fastapi.servers.server1]
+      url = "http://web:1002"
+
+[frontends]
+  [frontends.django]
+    backend = "fastapi"
+    passHostHeader = true
+    [frontends.fastapi.headers]
+      HostsProxyHeaders = ['X-CSRFToken']
+
